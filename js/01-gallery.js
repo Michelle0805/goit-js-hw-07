@@ -22,6 +22,11 @@ function createGalleryItem(item) {
   return listItem;
 }
 
+galleryItems.forEach((item) => {
+  const galleryItem = createGalleryItem(item);
+  gallery.appendChild(galleryItem);
+});
+
 function openModal(event) {
   event.preventDefault();
   if (event.target.nodeName !== 'IMG') return;
@@ -35,9 +40,21 @@ function openModal(event) {
   instance.show();
 }
 
-galleryItems.forEach((item) => {
-  const galleryItem = createGalleryItem(item);
-  gallery.appendChild(galleryItem);
-});
-
 gallery.addEventListener('click', openModal);
+
+function closeOnEscapeKey(event) {
+  event.preventDefault();
+  if (event.key === 'Escape') {
+    basicLightbox.close();
+    document.removeEventListener('keydown', closeOnEscapeKey);
+  }
+}
+
+document.addEventListener('keydown', closeOnEscapeKey);
+
+
+
+
+
+
+
